@@ -1,0 +1,59 @@
+/*! Place your custom styles here */
+
+
+
+.flickity-slider li.slide {
+    border: 0px solid #ececec !important;
+}
+
+.pagination {
+    text-align: center;
+    width: 100% !important;
+    margin-top: 1.85714286em;
+}
+.pagination:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.pagination a {
+    font-weight: normal;
+}
+.pagination div[class*='col-'] {
+    padding: 0;
+}
+.pagination ol {
+    margin-bottom: 0;
+    display: inline-block;
+}
+.pagination ol li {
+    display: inline-block;
+    margin: 0;
+    font-weight: 700;
+    line-height: 23px;
+    width: 1.85714286em;
+    height: 1.85714286em;
+    border-radius: 50%;
+    border: 1px solid #ececec;
+}
+.pagination ol li > a {
+    font-weight: 700;
+}
+.pagination ol li:not(:last-child) {
+    margin-right: 0.46428571em;
+}
+.pagination ol li.pagination__current {
+    cursor: default;
+    background: #ececec;
+    color: #aaa;
+}
+.pagination__prev,
+.pagination__next {
+    display: inline-block;
+}
+.pagination__next {
+    float: right;
+}
+.pagination__prev {
+    float: left;
+}

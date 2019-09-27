@@ -69,9 +69,6 @@ class admin_model extends CI_Model
 
 
     public function Contacts($contactWhere = array()){
-        $returnArray = array();
-        $ProductList = $this->product_model->Products();
-        $ProductList = $ProductList['Data'];
         if(count($contactWhere) > 0)
         {
             $this->db->where($contactWhere);
@@ -80,21 +77,7 @@ class admin_model extends CI_Model
         $query = $this->db->get('contacts');
         if($query->num_rows() > 0)
         {
-            $contactList = $query->result();
-            foreach ($contactList as $contact){
-                $contact->ProductTitle = 'No Product';
-                foreach ($ProductList as $product){
-                    if($product->Id == $contact->ProductId)
-                    {
-                        $contact->ProductTitle = $product->Title;
-                        break;
-                    }
-                }
-
-                $returnArray[] = $contact;
-            }
-
-            return $returnArray;
+            return $query->Result();
         }
         else
         {
@@ -159,6 +142,31 @@ class admin_model extends CI_Model
         return $resultArray;
     }
     // ---------------------UPDATE ADMIN-------------------------------------------------------------------------------
+    function addContacts($formData)
+    {
+        $resultArray = array(
+            'Errors' => array(),
+            'Data' => array()
+        );
+
+        $insertData = array(
+            'Name'=>$formData['Name'],
+            'PhoneNumber'=>$formData['PhoneNumber'],
+            'Mail'=>$formData['Mail'],
+            'Price'=>$formData['Price'],
+            'AddedDate'=>date('Y-m-d')
+        );
+
+        $this->db->insert('contacts',$insertData);
+        $insertResult = ($this->db->affected_rows() != 1) ? false : true;
+        if($insertResult == true) {
+            $resultArray['Data'] = $this->Contacts(array('Name'=>$formData['Name']));
+        } else {
+            $resultArray['Errors'] = array($this->lang->line('adminCantAdded'));
+        }
+        return $resultArray;
+    }
+    // ---------------------UPDATE ADMIN-------------------------------------------------------------------------------
     function addCategories($formData)
     {
         $resultArray = array(
@@ -167,17 +175,15 @@ class admin_model extends CI_Model
         );
 
         $insertData = array(
-            'Title'=>$formData['Title'],
-            'Description'=>$formData['Description'],
-            'Status'=>$formData['Status'],
+            'Name'=>$formData['Name'],
             'AddedDate'=>$formData['AddedDate'],
-            'UpdatedDate'=>'0000-00-00 00:00:00'
+            'Status'=>1
         );
 
-        $this->db->insert('categories',$insertData);
+        $this->db->insert('makineler',$insertData);
         $insertResult = ($this->db->affected_rows() != 1) ? false : true;
         if($insertResult == true) {
-            $resultArray['Data'] = $this->product_model->Categories(array('Title'=>$formData['Title']));
+            $resultArray['Data'] = $this->product_model->Categories(array('Name'=>$formData['Name']));
         } else {
             $resultArray['Errors'] = array($this->lang->line('categoryCantAdded'));
         }
@@ -335,16 +341,35 @@ class admin_model extends CI_Model
         );
 
         $updateData = array(
-            'Title'=>$formData['Title'],
-            'Description'=>$formData['Description'],
-            'Status'=>$formData['Status'],
-            'AddedDate'=>$formData['AddedDate'],
-            'UpdatedDate'=>$formData['UpdatedDate'],
+            'Firma'=>$formData['Firma'],
             'CategoryId'=>$formData['CategoryId'],
-            'Price'=>$formData['Price'],
-            'PriceDiscount'=>$formData['PriceDiscount'],
-            'Country'=>$formData['Country'],
-            'Year'=>$formData['Year'],
+            'Power'=>$formData['Power'],
+            'SeriNo'=>$formData['SeriNo'],
+            'MotorTipi'=>$formData['MotorTipi'],
+            'Alternator'=>$formData['Alternator'],
+            'AlternatorNo'=>$formData['AlternatorNo'],
+            'Kabin'=>$formData['Kabin'],
+            'AddedDate'=>$formData['AddedDate'],
+            'YagFiltresi'=>$formData['YagFiltresi'],
+            'YagLitre'=>$formData['YagLitre'],
+            'AntifrizFiltre'=>$formData['AntifrizFiltre'],
+            'MazotFiltresi'=>$formData['MazotFiltresi'],
+            'YakitFiltresi'=>$formData['YakitFiltresi'],
+            'Aku'=>$formData['Aku'],
+            'IsiticiHortumu'=>$formData['IsiticiHortumu'],
+            'KontrolPaneli'=>$formData['KontrolPaneli'],
+            'Rezistans'=>$formData['Rezistans'],
+            'Termostat'=>$formData['Termostat'],
+            'FanKayisi'=>$formData['FanKayisi'],
+            'TamponSarj'=>$formData['TamponSarj'],
+            'Avr'=>$formData['Avr'],
+            'MarsMotoru'=>$formData['MarsMotoru'],
+            'SarjDinamosu'=>$formData['SarjDinamosu'],
+            'YagMusuru'=>$formData['YagMusuru'],
+            'HararetMusuru'=>$formData['HararetMusuru'],
+            'YakitOtomatigi'=>$formData['YakitOtomatigi'],
+            'Turbo'=>$formData['Turbo'],
+            'Devirdaim'=>$formData['Devirdaim'],
             'Width'=>$formData['Width'],
             'Height'=>$formData['Height']
         );
@@ -434,7 +459,7 @@ class admin_model extends CI_Model
         return $resultArray;
     }
     //-----------------------------------------------------------------------------------------------------------------
-        function DeleteContact($whereData){
+    function DeleteContact($whereData){
 
         $resultArray = array(
             'Errors' => array(),

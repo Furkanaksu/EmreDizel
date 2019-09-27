@@ -31,9 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <label class="col-md-3 control-label">Marka:</label>
                         <div class="col-md-3">
                             <select id="selectCategory" name="Marka" class="form-control select-chosen" data-placeholder="<?php echo $this->lang->line('chooseCategory'); ?>" style="width: 250px;">
-                                <option></option>
                                 <?php foreach ($CategoryList as $row){?>
-                                    <option value="<?php echo $row->Id; ?>"><?php echo $row->Title; ?></option>
+                                    <option value="<?php echo $row->Id; ?>"><?php echo $row->Name; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Anamakine: 127.0.0.1:3306
--- Üretim Zamanı: 27 Eyl 2019, 09:14:17
--- Sunucu sürümü: 8.0.16
--- PHP Sürümü: 7.2.18
+-- Host: 127.0.0.1:3306
+-- Generation Time: Sep 27, 2019 at 02:15 PM
+-- Server version: 8.0.16
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Veritabanı: `emredizel`
+-- Database: `emredizel`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `admins`
+-- Table structure for table `admins`
 --
 
 DROP TABLE IF EXISTS `admins`;
@@ -47,17 +47,17 @@ CREATE TABLE IF NOT EXISTS `admins` (
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 --
--- Tablo döküm verisi `admins`
+-- Dumping data for table `admins`
 --
 
 INSERT INTO `admins` (`Id`, `Email`, `Password`, `Name`, `Surname`, `AddedDate`, `UpdatedDate`, `Status`, `LoginDate`, `IP`, `OS`, `Browser`, `FailedDate`) VALUES
 (12, 'email@email.com', 'admin123', 'furkan', 'furkan', '2019-07-02 00:00:00', '2019-07-03 00:00:00', 1, '2019-07-19 09:45:38', '::1', 'Windows 10', 'Chrome', '2019-07-01 00:00:00'),
-(30, 'admin@admin.com', 'admin12', 'Furkan', 'Admin', '2019-07-08 00:00:00', '2019-07-08 00:00:00', 1, '2019-09-26 19:08:14', '::1', 'Windows 10', 'Chrome', '2019-07-08 00:00:00');
+(30, 'admin@admin.com', 'admin12', 'Furkan', 'Admin', '2019-07-08 00:00:00', '2019-09-27 00:00:00', 1, '2019-09-27 00:00:00', '::11213', 'Windows 10', 'Chrome', '2019-09-27 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `categories`
+-- Table structure for table `categories`
 --
 
 DROP TABLE IF EXISTS `categories`;
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
--- Tablo döküm verisi `categories`
+-- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`Id`, `Title`, `Description`, `Status`, `AddedDate`, `UpdatedDate`) VALUES
@@ -99,40 +99,64 @@ INSERT INTO `categories` (`Id`, `Title`, `Description`, `Status`, `AddedDate`, `
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `contacts`
+-- Table structure for table `contacts`
 --
 
 DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE IF NOT EXISTS `contacts` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `ProductId` int(11) NOT NULL,
   `Price` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
   `PhoneNumber` varchar(15) NOT NULL,
   `Mail` varchar(45) NOT NULL,
   `Message` varchar(255) NOT NULL,
-  `Ip` varchar(45) NOT NULL,
   `AddedDate` datetime NOT NULL,
-  `Status` int(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
--- Tablo döküm verisi `contacts`
+-- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` (`Id`, `ProductId`, `Price`, `Name`, `PhoneNumber`, `Mail`, `Message`, `Ip`, `AddedDate`, `Status`) VALUES
-(7, 0, 0, 'ARGYRIS  ARGYRIDE', '', 'archie963@gmail.com', 'HELLO  ESREF  I AM INTERESTED ON MOVI  POSTERS OF GREEK ACTRESS  ALIKI VUYUKLAKI  BEST  REGARDS THANKS  ARGYRIS', '82.28.219.113', '2011-03-06 00:00:00', 1),
-(21, 0, 0, 'mauro', '', 'catsincool@gmail.com', 'Hello,\r\n\r\nhow I can purchase the poster of KAPTAN SWING?\r\nPlease let me know, thanks.', '151.15.133.80', '2014-01-20 00:00:00', 0),
-(27, 0, 0, 'Yoshikazu', '819089485409', 'yoshikazu73@hotmail.co.jp', 'hello from Japan.\r\nI am looking for Turkish original poster for SIVAS(2015)directed by:Kaan Mujdeci.\r\nIf you have for sell,please let me know.Thank you.Yoshi', '124.39.214.142', '2015-11-11 00:00:00', 0),
-(54, 0, 0, 'B.Mutlugöz', '0745284020', 'burhan.gueluemse@gmx.de', 'afisler orjinal mi yoksa siparis üzerine kopyalaniyor mu', '87.183.183.101', '2016-08-02 00:00:00', 0),
-(65, 0, 0, 'Guner Adil', '05362823191', 'orientblues@yahoo.com', 'merhaba, aşağıdaki afişler için (mevcutsa) fiyat verin\r\n\r\nJAMES BOND  Thunderball\r\nJAMES BOND AHTAPOT \r\nGUNDUZ INSAN GECE KURT\r\nBAKIRBAS MAKINELI SEYTAN  \r\nDr Jekyll & Sister Hyde\r\nBAKIRBAS MAKINELI SEYTAN  \r\nESRARENGIZ MUMYA\r\n\r\nSelamlar', '85.103.32.94', '2016-09-17 00:00:00', 0),
-(72, 0, 0, 'Guner Adil', '05362823191', 'orientblues@yahoo.com', 'hocam bu site aktif mi, daha önce de mesaj göndermiş ama yanıt alamamıştım, selamlar', '95.14.104.236', '2016-10-11 00:00:00', 0);
+INSERT INTO `contacts` (`Id`, `Price`, `Name`, `PhoneNumber`, `Mail`, `Message`, `AddedDate`) VALUES
+(7, 0, 'ARGYRIS  ARGYRIDE', '', 'archie963@gmail.com', 'HELLO  ESREF  I AM INTERESTED ON MOVI  POSTERS OF GREEK ACTRESS  ALIKI VUYUKLAKI  BEST  REGARDS THANKS  ARGYRIS', '2011-03-06 00:00:00'),
+(21, 0, 'mauro', '', 'catsincool@gmail.com', 'Hello,\r\n\r\nhow I can purchase the poster of KAPTAN SWING?\r\nPlease let me know, thanks.', '2014-01-20 00:00:00'),
+(27, 0, 'Yoshikazu', '819089485409', 'yoshikazu73@hotmail.co.jp', 'hello from Japan.\r\nI am looking for Turkish original poster for SIVAS(2015)directed by:Kaan Mujdeci.\r\nIf you have for sell,please let me know.Thank you.Yoshi', '2015-11-11 00:00:00'),
+(54, 0, 'B.Mutlugöz', '0745284020', 'burhan.gueluemse@gmx.de', 'afisler orjinal mi yoksa siparis üzerine kopyalaniyor mu', '2016-08-02 00:00:00'),
+(65, 0, 'Guner Adil', '05362823191', 'orientblues@yahoo.com', 'merhaba, aşağıdaki afişler için (mevcutsa) fiyat verin\r\n\r\nJAMES BOND  Thunderball\r\nJAMES BOND AHTAPOT \r\nGUNDUZ INSAN GECE KURT\r\nBAKIRBAS MAKINELI SEYTAN  \r\nDr Jekyll & Sister Hyde\r\nBAKIRBAS MAKINELI SEYTAN  \r\nESRARENGIZ MUMYA\r\n\r\nSelamlar', '2016-09-17 00:00:00'),
+(72, 0, 'Guner Adil', '05362823191', 'orientblues@yahoo.com', 'hocam bu site aktif mi, daha önce de mesaj göndermiş ama yanıt alamamıştım, selamlar', '2016-10-11 00:00:00'),
+(118, 555, 'Deneme', '555454645646', 'mail@mail', '', '2019-09-27 00:00:00'),
+(119, 555, 'Deneme', '555454645646', 'mail@mail', '', '2019-09-27 00:00:00'),
+(121, 1986, 'Furkan', '05442617598', 'SFASFHASJKFH', '', '2019-09-27 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `products`
+-- Table structure for table `makineler`
+--
+
+DROP TABLE IF EXISTS `makineler`;
+CREATE TABLE IF NOT EXISTS `makineler` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(250) NOT NULL,
+  `AddedDate` varchar(250) NOT NULL,
+  `Status` int(1) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `makineler`
+--
+
+INSERT INTO `makineler` (`Id`, `Name`, `AddedDate`, `Status`) VALUES
+(1, 'Cat', '2019', 1),
+(2, 'Volvo', '2019', 1),
+(3, 'Deneme', '2019-09-27 00:00:00', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
 --
 
 DROP TABLE IF EXISTS `products`;
@@ -170,20 +194,21 @@ CREATE TABLE IF NOT EXISTS `products` (
   `Height` int(250) NOT NULL,
   `AddedDate` varchar(250) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Tablo döküm verisi `products`
+-- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`Id`, `Firma`, `CategoryId`, `Power`, `SeriNo`, `MotorTipi`, `Alternator`, `AlternatorNo`, `Kabin`, `YagFiltresi`, `YagLitre`, `AntifrizFiltre`, `MazotFiltresi`, `YakitFiltresi`, `Aku`, `IsiticiHortumu`, `KontrolPaneli`, `Rezistans`, `Termostat`, `FanKayisi`, `TamponSarj`, `Avr`, `MarsMotoru`, `SarjDinamosu`, `YagMusuru`, `HararetMusuru`, `YakitOtomatigi`, `Turbo`, `Devirdaim`, `Width`, `Height`, `AddedDate`) VALUES
 (1, 'fasfasfa', 2, 'sfafasf', 'khju', 'ıouyhuıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıg', '7rtf65', 'rf65', 'f65', 'f', '56f', '56', 'f56', 'f56', 'f56', 'f65', 'f56', 'f65', 'f56', 'f5', 6, 65, '2019-09-26'),
-(2, 'fasfasfa', 0, 'sfafasf', 'khju', 'ıouyhuıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıg', '7rtf65', 'rf65', 'f65', 'f', '56f', '56', 'f56', 'f56', 'f56', 'f65', 'f56', 'f65', 'f56', 'f5', 6, 65, '2019-09-26');
+(2, 'fasfasfa', 0, 'sfafasf', 'khju', 'ıouyhuıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıh', 'uıg', '7rtf65', 'rf65', 'f65', 'f', '56f', '56', 'f56', 'f56', 'f56', 'f65', 'f56', 'f65', 'f56', 'f5', 6, 65, '2019-09-26'),
+(4, 'hjkh', 3, 'jkljklj', 'kjl', 'j', 'kj', 'kljklhjkh', 'kjh', 'hjkhkjhjk', 'hjkhjk', 'hjk', 'hjkhjkh', 'jkh', 'jkh', 'jkh', 'jkh', 'jk', 'hjk', 'hjk', 'hjk', 'h', 'jh', 'ygtt6', 'g', '7h8', '9ı0*', 'ıp', 'ohyg', 0, 0, '2019-09-27 00:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `productsimage`
+-- Table structure for table `productsimage`
 --
 
 DROP TABLE IF EXISTS `productsimage`;
@@ -198,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `productsimage` (
 ) ENGINE=InnoDB AUTO_INCREMENT=944 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
--- Tablo döküm verisi `productsimage`
+-- Dumping data for table `productsimage`
 --
 
 INSERT INTO `productsimage` (`Id`, `ProductId`, `Image`, `Status`, `AddedDate`, `Main`) VALUES

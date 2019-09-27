@@ -45,7 +45,6 @@ class Admin extends CI_Controller {
     }
 
 //--------------------------------------------------------------------------------------------------------
-
     function setLang($lang)
     {
         $previousUrl = $this->session->userdata('referred_from');
@@ -86,14 +85,11 @@ class Admin extends CI_Controller {
         //die();
         redirect($newUrl);
     }
-
-//--------------------------------------------------------------------------------------------------------
     function index()
     {
         $data['title'] = 'Admin Login';
         $this->load->view("admin/login");
     }
-//--------------------------------------------------------------------------------------------------------
     function login_validation()
     {
         $this-> form_validation->set_rules('login-email', 'Username', 'required');
@@ -143,7 +139,6 @@ class Admin extends CI_Controller {
             $this->login();
         }
     }
-//--------------------------------------------------------------------------------------------------------
     function dashboard()
     {
         $data = array();
@@ -152,8 +147,6 @@ class Admin extends CI_Controller {
         $data['View']='admin/dashboard';
         $this->load->view('admin/template', $data);
     }
-
-//--------------------------------------------------------------------------------------------------------
     function enter(){
         if($this->session->userdata('username') != '')
         {
@@ -172,7 +165,8 @@ class Admin extends CI_Controller {
         $this->session->sess_destroy();
         redirect(site_url() . 'admin');
     }
-//---------------------------------------GET ADMINS-----------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
     function getAdmins()
     {
         $data = array();
@@ -182,18 +176,15 @@ class Admin extends CI_Controller {
         $data['View']='admin/admins';
         $this->load->view('admin/template', $data);
     }
-
-    //------------------------------------CATEGORIES----------------------------------------------------------
     function Categories()
     {
         $data = array();
-        $data['categories'] = $this->product_model->Categories();
+        $data['CategoryList'] = $this->product_model->Categories();
         $data['MetaTitle']='Categories';
         $data['MetaDescription']='admin/getCategories';
         $data['View']='admin/categories';
         $this->load->view('admin/template', $data);
     }
-    //-------------------------------------PRODUCTS------------------------------------------------------------
     function Products($page = 1)
     {
         $data = array();
@@ -210,7 +201,6 @@ class Admin extends CI_Controller {
         $data['View']='admin/Products';
         $this->load->view('admin/template', $data);
     }
-    //-------------------------------------Contacts------------------------------------------------------------
     function Contacts()
     {
         $data = array();
@@ -220,8 +210,9 @@ class Admin extends CI_Controller {
         $data['View']='admin/contacts';
         $this->load->view('admin/template', $data);
     }
+//--------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 
-//--------------------------------------------AddAdmin---------------------------------------------------------
     function AddAdmin()
     {
         $data = array();
@@ -271,21 +262,18 @@ class Admin extends CI_Controller {
 
         $this->load->view('admin/template', $data);
     }
-
-//--------------------------------------------------------------------------------------------------------
     function AddCategories()
     {
         $data = array();
         $data['MetaTitle']='AddCategories';
+        $data['categories'] = $this->product_model->Categories();
         $data['MetaDescription']='admin/AddCategories';
         $data['View']='admin/AddCategories';
 
         if(!empty($this->input->post()))
         {
-            $this-> form_validation->set_rules('Title', 'Title', 'required|min_length[2]');
-            $this->form_validation->set_rules('Description', 'Description', 'required|min_length[4]');
-            $this->form_validation->set_rules('Status', 'Status', 'required|min_length[1]');
-            $this->form_validation->set_rules('AddedDate', 'AddedDate', 'required|min_length[8]');
+            $this-> form_validation->set_rules('Name', 'Name', 'required|min_length[2]');
+            $this->form_validation->set_rules('AddedDate', 'AddedDate', 'required|min_length[2]');
             if($this->form_validation->run() == FALSE)
             {
                 $this->session->set_flashdata('MessageType','danger');
@@ -294,9 +282,7 @@ class Admin extends CI_Controller {
                 return;
             }
             $formData=array(
-                'Title'=>$this->input->post('Title'),
-                'Description'=>$this->input->post('Description'),
-                'Status'=>$this->input->post('Status'),
+                'Name'=>$this->input->post('Name'),
                 'AddedDate'=>$this->input->post('AddedDate'),
             );
             $resultArray = $this->admin_model->addCategories($formData);
@@ -317,8 +303,6 @@ class Admin extends CI_Controller {
 
         $this->load->view('admin/template', $data);
     }
-
-//--------------------------------------------------------------------------------------------------------
     function AddProduct()
     {
         $data = array();
@@ -420,7 +404,102 @@ class Admin extends CI_Controller {
 
         $this->load->view('admin/template', $data);
     }
-//--------------------------------------------------------------------------------------------------------
+    function AddContact()
+    {
+        $data = array();
+        $data['MetaTitle']='addContact';
+        $data['MetaDescription']='admin/addContact';
+        $data['View']='admin/addContact';
+
+        if(!empty($this->input->post()))
+        {
+            $this-> form_validation->set_rules('Name', 'Name', 'required|min_length[2]');
+            $this->form_validation->set_rules('PhoneNumber', 'PhoneNumber');
+            $this->form_validation->set_rules('Mail', 'Mail', 'required|min_length[2]');
+            $this->form_validation->set_rules('Price', 'Price', 'required|min_length[1]');
+
+            if($this->form_validation->run() == FALSE)
+            {
+                $this->session->set_flashdata('MessageType','danger');
+                $this->session->set_flashdata('Message', validation_errors());
+                $this->load->view('admin/template', $data);
+                return;
+            }
+
+            $formData=array(
+                'Name'=>$this->input->post('Name'),
+                'PhoneNumber'=>$this->input->post('PhoneNumber'),
+                'Mail'=>$this->input->post('Mail'),
+                'Price'=>$this->input->post('Price'),
+            );
+            $resultArray = $this->admin_model->AddContacts($formData);
+
+            if(isset($resultArray['Errors']) && count($resultArray ['Errors']) > 0){
+                $this->session->set_flashdata('MessageType','danger');
+                $this->session->set_flashdata('Message',$resultArray['Errors'][0]);
+                return;
+            } else if(count($resultArray['Data']) > 0) {
+                $this->session->set_flashdata('MessageType','success');
+                $this->session->set_flashdata('Message', $this->lang->line('productAddSuccess'));
+                redirect(site_url() . 'admin/Contacts');
+            }
+
+            $this->session->set_flashdata('MessageType','danger');
+            $this->session->set_flashdata('Message', $this->lang->line('somethingWentWrong'));
+        }
+
+        $this->load->view('admin/template', $data);
+    }
+//--------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
+    function UpdateCategory($categoryId){
+        $data = array();
+        $data['AdminDetail'] = $this->product_model->Categories(array('Id'=> $categoryId));
+        $data['MetaTitle']='UpdateCategory';
+        $data['MetaDescription']='admin/UpdateCategory';
+        $data['View']='admin/UpdateCategory';
+
+        if(!empty($this->input->post()))
+        {$this-> form_validation->set_rules('Title', 'Title', 'required|min_length[2]');
+            $this->form_validation->set_rules('Description', 'Description', 'required|min_length[4]');
+            $this->form_validation->set_rules('Status', 'Status', 'required|min_length[1]');
+            $this->form_validation->set_rules('AddedDate', 'AddedDate', 'required|min_length[8]');
+            $this->form_validation->set_rules('UpdatedDate', 'UpdatedDate', 'required|min_length[8]');
+            if($this->form_validation->run() == FALSE)
+            {
+                $this->session->set_flashdata('MessageType','danger');
+                $this->session->set_flashdata('Message', validation_errors());
+                $this->load->view('admin/template', $data);
+                return;
+            }
+
+            $formData=array(
+                'Title'=>$this->input->post('Title'),
+                'Description'=>$this->input->post('Description'),
+                'Status'=>$this->input->post('Status'),
+                'AddedDate'=>$this->input->post('AddedDate'),
+                'UpdatedDate'=>$this->input->post('UpdatedDate')
+            );
+
+            $whereData = array('Id' =>$categoryId);
+            $resultArray = $this->admin_model->UpdateCategory($whereData,$formData);
+
+            if(isset($resultArray['Errors']) && count($resultArray ['Errors']) > 0){
+                $this->session->set_flashdata('MessageType','danger');
+                $this->session->set_flashdata('Message',$resultArray['Errors'][0]);
+                return;
+            } else if(count($resultArray['Data']) > 0) {
+                $this->session->set_flashdata('MessageType','success');
+                $this->session->set_flashdata('Message', $this->lang->line('categoryUpdateSuccess'));
+                redirect(site_url() . 'admin/UpdateCategory/'.$categoryId);
+            }
+
+            $this->session->set_flashdata('MessageType','danger');
+            $this->session->set_flashdata('Message', $this->lang->line('somethingWentWrong'));
+        }
+
+        $this->load->view('admin/template', $data);
+    }
     function UpdateAdmin($adminId){
         $data = array();
         $data['AdminDetail'] = $this->admin_model->getAdmins(array('Id'=> $adminId));
@@ -484,81 +563,49 @@ class Admin extends CI_Controller {
 
         $this->load->view('admin/template', $data);
     }
-//--------------------------------------------------------------------------------------------------------
-    function UpdateCategory($categoryId){
-        $data = array();
-        $data['AdminDetail'] = $this->product_model->Categories(array('Id'=> $categoryId));
-        $data['MetaTitle']='UpdateCategory';
-        $data['MetaDescription']='admin/UpdateCategory';
-        $data['View']='admin/UpdateCategory';
-
-        if(!empty($this->input->post()))
-        {$this-> form_validation->set_rules('Title', 'Title', 'required|min_length[2]');
-            $this->form_validation->set_rules('Description', 'Description', 'required|min_length[4]');
-            $this->form_validation->set_rules('Status', 'Status', 'required|min_length[1]');
-            $this->form_validation->set_rules('AddedDate', 'AddedDate', 'required|min_length[8]');
-            $this->form_validation->set_rules('UpdatedDate', 'UpdatedDate', 'required|min_length[8]');
-            if($this->form_validation->run() == FALSE)
-            {
-                $this->session->set_flashdata('MessageType','danger');
-                $this->session->set_flashdata('Message', validation_errors());
-                $this->load->view('admin/template', $data);
-                return;
-            }
-
-            $formData=array(
-                'Title'=>$this->input->post('Title'),
-                'Description'=>$this->input->post('Description'),
-                'Status'=>$this->input->post('Status'),
-                'AddedDate'=>$this->input->post('AddedDate'),
-                'UpdatedDate'=>$this->input->post('UpdatedDate')
-            );
-
-            $whereData = array('Id' =>$categoryId);
-            $resultArray = $this->admin_model->UpdateCategory($whereData,$formData);
-
-            if(isset($resultArray['Errors']) && count($resultArray ['Errors']) > 0){
-                $this->session->set_flashdata('MessageType','danger');
-                $this->session->set_flashdata('Message',$resultArray['Errors'][0]);
-                return;
-            } else if(count($resultArray['Data']) > 0) {
-                $this->session->set_flashdata('MessageType','success');
-                $this->session->set_flashdata('Message', $this->lang->line('categoryUpdateSuccess'));
-                redirect(site_url() . 'admin/UpdateCategory/'.$categoryId);
-            }
-
-            $this->session->set_flashdata('MessageType','danger');
-            $this->session->set_flashdata('Message', $this->lang->line('somethingWentWrong'));
-        }
-
-        $this->load->view('admin/template', $data);
-    }
-
-
-    //--------------------------------------------------------------------------------------------------------
     function UpdateProduct($productId){
         $data = array();
         $productArray = $this->product_model->Products(array('Id'=> $productId));
+        $data['CategoryList'] = $this->product_model->Categories();
         $data['ProductDetail'] = $productArray['Data'];
         $data['MetaTitle']='UpdateProduct';
         $data['MetaDescription']='admin/UpdateProduct';
         $data['View']='admin/UpdateProduct';
-        $data['CategoryList'] = $this->product_model->Categories();
 
         if(!empty($this->input->post()))
         {
-            $this-> form_validation->set_rules('Title', 'Title', 'required|min_length[2]');
-            $this->form_validation->set_rules('CategoryId', 'CategoryId');
-            $this->form_validation->set_rules('AddedDate', 'AddedDate', 'required|min_length[10]');
-            $this->form_validation->set_rules('UpdatedDate', 'UpdatedDate', 'required|min_length[10]');
-            $this->form_validation->set_rules('Status', 'Status', 'required|min_length[1]');
-            $this->form_validation->set_rules('Price', 'Price', 'required|min_length[1]');
-            $this->form_validation->set_rules('PriceDiscount', 'PriceDiscount', 'required|min_length[1]');
-            $this->form_validation->set_rules('Country', 'Country', 'required|min_length[1]');
-            $this->form_validation->set_rules('Year', 'Year', 'required|min_length[4]|max_length[4]');
-            $this->form_validation->set_rules('Width', 'Width', 'required|min_length[1]');
-            $this->form_validation->set_rules('Height', 'Height', 'required|min_length[1]');
-            $this->form_validation->set_rules('Description', 'Description', 'required|min_length[1]');
+            $this-> form_validation->set_rules('Firma', 'Firma','required');
+            $this-> form_validation->set_rules('CategoryId', 'CategoryId','required');
+            $this-> form_validation->set_rules('Power', 'Power','required');
+            $this-> form_validation->set_rules('SeriNo', 'SeriNo','required');
+            $this-> form_validation->set_rules('MotorTipi', 'MotorTipi','required');
+            $this-> form_validation->set_rules('Alternator', 'Alternator','required');
+            $this-> form_validation->set_rules('AlternatorNo', 'AlternatorNo','required');
+            $this-> form_validation->set_rules('Kabin', 'Kabin','required');
+            $this-> form_validation->set_rules('AddedDate', 'AddedDate','required');
+            $this-> form_validation->set_rules('YagFiltresi', 'YagFiltresi','required');
+            $this-> form_validation->set_rules('YagLitre', 'YagLitre','required');
+            $this-> form_validation->set_rules('AntifrizFiltre', 'AntifrizFiltre','required');
+            $this-> form_validation->set_rules('MazotFiltresi', 'MazotFiltresi','required');
+            $this-> form_validation->set_rules('YakitFiltresi', 'YakitFiltresi','required');
+            $this-> form_validation->set_rules('Aku', 'Aku','required');
+            $this-> form_validation->set_rules('IsiticiHortumu', 'IsiticiHortumu','required');
+            $this-> form_validation->set_rules('KontrolPaneli', 'KontrolPaneli','required');
+            $this-> form_validation->set_rules('Rezistans', 'Rezistans','required');
+            $this-> form_validation->set_rules('Termostat', 'Termostat','required');
+            $this-> form_validation->set_rules('FanKayisi', 'FanKayisi','required');
+            $this-> form_validation->set_rules('TamponSarj', 'TamponSarj','required');
+            $this-> form_validation->set_rules('Avr', 'Avr','required');
+            $this-> form_validation->set_rules('MarsMotoru', 'MarsMotoru','required');
+            $this-> form_validation->set_rules('SarjDinamosu', 'SarjDinamosu','required');
+            $this-> form_validation->set_rules('YagMusuru', 'YagMusuru','required');
+            $this-> form_validation->set_rules('HararetMusuru', 'HararetMusuru','required');
+            $this-> form_validation->set_rules('YakitOtomatigi', 'YakitOtomatigi','required');
+            $this-> form_validation->set_rules('Turbo', 'Turbo','required');
+            $this-> form_validation->set_rules('Devirdaim', 'Devirdaim','required');
+            $this-> form_validation->set_rules('Width', 'Width','required');
+            $this-> form_validation->set_rules('Height', 'Height','required');
+
             if($this->form_validation->run() == FALSE)
             {
                 $this->session->set_flashdata('MessageType','danger');
@@ -568,18 +615,37 @@ class Admin extends CI_Controller {
             }
 
             $formData=array(
-                'Title'=>$this->input->post('Title'),
+                'Firma'=>$this->input->post('Firma'),
                 'CategoryId'=>$this->input->post('CategoryId'),
-                'UpdatedDate'=>$this->input->post('UpdatedDate'),
-                'Status'=>$this->input->post('Status'),
-                'Price'=>$this->input->post('Price'),
-                'PriceDiscount'=>$this->input->post('PriceDiscount'),
-                'Country'=>$this->input->post('Country'),
-                'Year'=>$this->input->post('Year'),
+                'Power'=>$this->input->post('Power'),
+                'SeriNo'=>$this->input->post('SeriNo'),
+                'MotorTipi'=>$this->input->post('MotorTipi'),
+                'Alternator'=>$this->input->post('Alternator'),
+                'AlternatorNo'=>$this->input->post('AlternatorNo'),
+                'Kabin'=>$this->input->post('Kabin'),
+                'AddedDate'=>$this->input->post('AddedDate'),
+                'YagFiltresi'=>$this->input->post('YagFiltresi'),
+                'YagLitre'=>$this->input->post('YagLitre'),
+                'AntifrizFiltre'=>$this->input->post('AntifrizFiltre'),
+                'MazotFiltresi'=>$this->input->post('MazotFiltresi'),
+                'YakitFiltresi'=>$this->input->post('YakitFiltresi'),
+                'Aku'=>$this->input->post('Aku'),
+                'IsiticiHortumu'=>$this->input->post('IsiticiHortumu'),
+                'KontrolPaneli'=>$this->input->post('KontrolPaneli'),
+                'Rezistans'=>$this->input->post('Rezistans'),
+                'Termostat'=>$this->input->post('Termostat'),
+                'FanKayisi'=>$this->input->post('FanKayisi'),
+                'TamponSarj'=>$this->input->post('TamponSarj'),
+                'Avr'=>$this->input->post('Avr'),
+                'MarsMotoru'=>$this->input->post('MarsMotoru'),
+                'SarjDinamosu'=>$this->input->post('SarjDinamosu'),
+                'YagMusuru'=>$this->input->post('YagMusuru'),
+                'HararetMusuru'=>$this->input->post('HararetMusuru'),
+                'YakitOtomatigi'=>$this->input->post('YakitOtomatigi'),
+                'Turbo'=>$this->input->post('Turbo'),
+                'Devirdaim'=>$this->input->post('Devirdaim'),
                 'Width'=>$this->input->post('Width'),
-                'Height'=>$this->input->post('Height'),
-                'Description'=>$this->input->post('Description'),
-                'AddedDate'=>$this->input->post('AddedDate')
+                'Height'=>$this->input->post('Height')
             );
 
             $whereData = array('Id' =>$productId);
@@ -588,11 +654,12 @@ class Admin extends CI_Controller {
             if(isset($resultArray['Errors']) && count($resultArray ['Errors']) > 0){
                 $this->session->set_flashdata('MessageType','danger');
                 $this->session->set_flashdata('Message',$resultArray['Errors'][0]);
+                redirect(site_url() . 'admin/Products');
                 return;
             } else if(count($resultArray['Data']) > 0) {
                 $this->session->set_flashdata('MessageType','success');
                 $this->session->set_flashdata('Message', $this->lang->line('productUpdateSuccess'));
-                redirect(site_url() . 'admin/UpdateProduct/'.$productId);
+                redirect(site_url() . 'admin/Products');
             }
 
             $this->session->set_flashdata('MessageType','danger');
@@ -601,8 +668,8 @@ class Admin extends CI_Controller {
 
         $this->load->view('admin/template', $data);
     }
-
-//--------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
     function DeleteAdmin($adminId){
         $whereData = array('Id' =>$adminId);
         $resultArray = $this->admin_model->DeleteAdmin($whereData);
@@ -621,7 +688,6 @@ class Admin extends CI_Controller {
 
         redirect(site_url() . 'admin/GetAdmins');
     }
-//--------------------------------------------------------------------------------------------------------
     function DeleteCategory($categoryId){
         $whereData = array('Id' =>$categoryId);
         $resultArray = $this->admin_model->DeleteCategory($whereData);
@@ -640,7 +706,6 @@ class Admin extends CI_Controller {
 
         redirect(site_url() . 'admin/Categories');
     }
-
     function DeleteProduct($productId){
         $whereData = array('Id' =>$productId);
         $resultArray = $this->admin_model->DeleteProduct($whereData);
@@ -659,7 +724,6 @@ class Admin extends CI_Controller {
 
         redirect(site_url() . 'admin/Products');
     }
-
     function DeleteContact($contactId){
         $whereData = array('Id' =>$contactId);
         $resultArray = $this->admin_model->DeleteContact($whereData);
@@ -678,7 +742,8 @@ class Admin extends CI_Controller {
 
         redirect(site_url() . 'admin/Contacts');
     }
-//--------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 
     function ProductsImage($ProductId){
         $data['MetaTitle']='ProductsImage';
@@ -688,27 +753,6 @@ class Admin extends CI_Controller {
         $data['ProductId'] = $ProductId;
         $this->load->view('admin/template', $data);
     }
-
-    function DeleteProductImage($productId, $productImageId){
-        $whereData = array('Id' =>$productImageId);
-        $resultArray = $this->admin_model->DeleteProductImage($whereData);
-        if(isset($resultArray['Errors']) && count($resultArray ['Errors']) > 0){
-            $this->session->set_flashdata('MessageType','danger');
-            $this->session->set_flashdata('Message',$resultArray['Errors'][0]);
-            return;
-        } else if(count($resultArray['Data']) > 0) {
-            $this->session->set_flashdata('MessageType','success');
-            $this->session->set_flashdata('Message',$this->lang->line('deleteProduct'));
-            redirect(site_url() . 'admin/Products');
-        }
-
-        $this->session->set_flashdata('MessageType','danger');
-        $this->session->set_flashdata('Message' , $this->lang->line('somethingWentWrong'));
-
-        redirect(site_url() . 'admin/ProductImage/'.$productId);
-    }
-//--------------------------------------------------------------------------------------------------------
-
     function AddProductImage($productId){
 
         if($_SERVER['REQUEST_METHOD'] != 'POST')
@@ -763,4 +807,25 @@ class Admin extends CI_Controller {
         $this->session->set_flashdata('Message', $this->lang->line('somethingWentWrong'));
         json_output(500,array('error'=>4));
     }
+    function DeleteProductImage($productId, $productImageId){
+        $whereData = array('Id' =>$productImageId);
+        $resultArray = $this->admin_model->DeleteProductImage($whereData);
+        if(isset($resultArray['Errors']) && count($resultArray ['Errors']) > 0){
+            $this->session->set_flashdata('MessageType','danger');
+            $this->session->set_flashdata('Message',$resultArray['Errors'][0]);
+            return;
+        } else if(count($resultArray['Data']) > 0) {
+            $this->session->set_flashdata('MessageType','success');
+            $this->session->set_flashdata('Message',$this->lang->line('deleteProduct'));
+            redirect(site_url() . 'admin/Products');
+        }
+
+        $this->session->set_flashdata('MessageType','danger');
+        $this->session->set_flashdata('Message' , $this->lang->line('somethingWentWrong'));
+
+        redirect(site_url() . 'admin/ProductImage/'.$productId);
+    }
+//--------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
+
 }

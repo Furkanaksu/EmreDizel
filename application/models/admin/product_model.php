@@ -10,7 +10,7 @@ class product_model extends CI_Model
             $this->db->where($categoryWhere);
         }
         $this->db->order_by('Id', 'ASC');
-        $query = $this->db->get('categories');
+        $query = $this->db->get('makineler');
         if($query->num_rows() > 0)
         {
             return $query->result();
@@ -50,7 +50,7 @@ class product_model extends CI_Model
                 foreach ($CategoryList as $category){
                     if($product->CategoryId == $category->Id)
                     {
-                        $product->CategoryTitle = $category->Title;
+                        $product->CategoryTitle = $category->Name;
                         break;
                     }
                 }

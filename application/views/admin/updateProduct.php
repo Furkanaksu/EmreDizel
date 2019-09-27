@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="block-title">
                     <h2><strong><?php echo $this->lang->line('addProduct'); ?></strong></h2>
                 </div>
-                <form action="<?php echo site_url(); ?>admin/UpdateProduct/<?php echo $ProductDetail[0]->Id; ?>" method="post" class="form-horizontal form-bordered">
+                <form action="<?php echo site_url(); ?>admin/UpdateProduct/<?php echo $ProductDetail[0]->Id; ?> " method="post" class="form-horizontal form-bordered">
                     <?php
                     if($this->session->flashdata('Message') != null)
                     {
@@ -30,10 +30,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                         <label class="col-md-3 control-label">Marka:</label>
                         <div class="col-md-3">
-                            <select id="selectCategory" name="Marka" class="form-control select-chosen" data-placeholder="<?php echo $this->lang->line('chooseCategory'); ?>" style="width: 250px;">
-                                <option value="<?php echo $ProductDetail[0]->CategoryTitle; ?>"><?php echo $ProductDetail[0]->CategoryTitle; ?></option>
+                            <select id="selectCategory" name="CategoryId" class="form-control select-chosen" data-placeholder="<?php echo $this->lang->line('chooseCategory'); ?>" style="width: 250px;">
+                                <option value="<?php echo $ProductDetail[0]->CategoryId; ?>"><?php echo $ProductDetail[0]->CategoryTitle; ?></option>
                                 <?php foreach ($CategoryList as $row){?>
-                                    <option value="<?php echo $row->Title; ?>"><?php echo $row->Title; ?></option>
+                                    <option value="<?php echo $row->Id; ?>"><?php echo $row->Name; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -219,6 +219,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <input type="submit" value="<?php echo $this->lang->line('addProductBtn'); ?>" class="btn btn-md btn-primary" />
                             </div>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>

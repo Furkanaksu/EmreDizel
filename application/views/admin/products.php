@@ -10,7 +10,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="btn-group btn-group-sm pull-right">
                 <a href="<?php echo site_url(); ?>admin/AddProduct" class="btn btn-primary" data-toggle="tooltip" title="Add New Category"><?php echo $this->lang->line('addProduct'); ?></a>
             </div>
+            <div class="btn-group btn-group-sm pull-left">
+                <form action="<?php echo site_url()?>/admin/Products" method="post">
+                    <input type="email" id="Email" name="Email"  class="form-control" />
+                </form>
+            </div>
         </div>
+
         <div class="table-responsive">
             <table id="general-datatable" class="table table-striped table-vcenter table-bordered">
                 <thead>

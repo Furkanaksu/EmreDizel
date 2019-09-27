@@ -406,3 +406,15 @@ ERROR - 2019-09-26 19:29:20 --> Severity: Notice --> Undefined property: stdClas
 ERROR - 2019-09-26 19:29:20 --> Severity: Notice --> Undefined property: stdClass::$CategoryTitle C:\wamp64\www\EmreDizel\application\views\admin\updateProduct.php 36
 ERROR - 2019-09-26 19:29:20 --> Severity: Notice --> Undefined property: stdClass::$CategoryTitle C:\wamp64\www\EmreDizel\application\views\admin\updateProduct.php 36
 ERROR - 2019-09-26 19:33:13 --> Severity: error --> Exception: Too few arguments to function Admin::UpdateProduct(), 0 passed in C:\wamp64\www\EmreDizel\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\wamp64\www\EmreDizel\application\controllers\Admin.php 539
+ERROR - 2019-09-26 19:40:52 --> Severity: error --> Exception: Unable to locate the model you have specified: Product_model C:\wamp64\www\EmreDizel\system\core\Loader.php 348
+ERROR - 2019-09-26 19:40:57 --> Severity: error --> Exception: Unable to locate the model you have specified: Product_model C:\wamp64\www\EmreDizel\system\core\Loader.php 348
+ERROR - 2019-09-26 19:40:58 --> Severity: error --> Exception: Unable to locate the model you have specified: Product_model C:\wamp64\www\EmreDizel\system\core\Loader.php 348
+ERROR - 2019-09-26 19:40:59 --> Severity: error --> Exception: Unable to locate the model you have specified: Product_model C:\wamp64\www\EmreDizel\system\core\Loader.php 348
+ERROR - 2019-09-26 19:40:59 --> Severity: error --> Exception: Unable to locate the model you have specified: Product_model C:\wamp64\www\EmreDizel\system\core\Loader.php 348
+ERROR - 2019-09-26 19:41:26 --> Severity: error --> Exception: Unable to locate the model you have specified: Product_model C:\wamp64\www\EmreDizel\system\core\Loader.php 348
+ERROR - 2019-09-26 19:42:01 --> 404 Page Not Found: Tr/assets
+ERROR - 2019-09-26 19:42:01 --> 404 Page Not Found: Tr/assets
+ERROR - 2019-09-26 19:42:01 --> 404 Page Not Found: Assets/admin
+ERROR - 2019-09-26 19:42:01 --> 404 Page Not Found: Tr/assets
+ERROR - 2019-09-26 19:42:11 --> Severity: Notice --> Undefined property: stdClass::$Description C:\wamp64\www\EmreDizel\application\models\admin\product_model.php 61
+ERROR - 2019-09-26 19:42:11 --> Severity: Notice --> Undefined property: stdClass::$Description C:\wamp64\www\EmreDizel\application\models\admin\product_model.php 61

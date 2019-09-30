@@ -194,7 +194,7 @@ class Admin extends CI_Controller {
             $data['CurrentPage'] = $page;
             $page = $page - 1;
             $start = ($page * PAGE_LIMIT);
-            $productArray = $this->product_model->Products(array('Firma'=>$search),$start);
+            $productArray = $this->product_model->Products(array(),$start ,PAGE_LIMIT, 'DESC', array('Firma'=> $search));
             $data['Products'] = $productArray['Data'];
             $data['TotalPage'] = ceil($productArray['TotalRecord'] / PAGE_LIMIT);
             $data['Categories'] = $this->product_model->Categories();

@@ -89,13 +89,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a href="<?php echo site_url(); ?>admin/GetAdmins"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide"><?php echo $this->lang->line('admin') ?></span></a>
                 </li>
                 <li>
-                    <a href="<?php echo site_url(); ?>admin/Categories"><i class="gi gi-leaf sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide"><?php echo $this->lang->line('categories') ?></span></a>
+                    <a href="<?php echo site_url(); ?>admin/Categories"><i class="gi gi-leaf sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Makineler</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo site_url(); ?>admin/Products"><i class="gi gi-leaf sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide"><?php echo $this->lang->line('product') ?></span></a>
+                    <a href="<?php echo site_url(); ?>admin/Products"><i class="gi gi-leaf sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Ürünler</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo site_url(); ?>admin/Contacts"><i class="gi gi-leaf sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide"><?php echo $this->lang->line('contacts') ?></span></a>
+                    <a href="<?php echo site_url(); ?>admin/Contacts"><i class="gi gi-leaf sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">İletişim</span></a>
                 </li>
                 <li class="sidebar-header">
                     <span class="sidebar-header-options clearfix"></span>

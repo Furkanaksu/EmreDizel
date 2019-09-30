@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="btn-group btn-group-sm pull-left">
                 <form action="<?php echo site_url()?>/admin/Products" method="post">
-                    <input type="email" id="Email" name="Email"  class="form-control" />
+                    <input type="text" id="search" name="search"  class="form-control" />
                 </form>
             </div>
         </div>

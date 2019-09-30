@@ -187,19 +187,36 @@ class Admin extends CI_Controller {
     }
     function Products($page = 1)
     {
-        $data = array();
-        $data['CurrentPage'] = $page;
-        $page = $page - 1;
-        $start = ($page * PAGE_LIMIT);
-        $productArray = $this->product_model->Products(array(),$start);
-        $data['Image'] = $this->product_model->ProductsImage();
-        $data['Products'] = $productArray['Data'];
-        $data['TotalPage'] = ceil($productArray['TotalRecord'] / PAGE_LIMIT);
-        $data['Categories'] = $this->product_model->Categories();
-        $data['MetaTitle']='Products';
-        $data['MetaDescription']='admin/Products';
-        $data['View']='admin/Products';
-        $this->load->view('admin/template', $data);
+        $search = $this->input->post('search');
+        if($search != '' && $search != null)
+        {
+            $data = array();
+            $data['CurrentPage'] = $page;
+            $page = $page - 1;
+            $start = ($page * PAGE_LIMIT);
+            $productArray = $this->product_model->Products(array('Firma'=>$search),$start);
+            $data['Products'] = $productArray['Data'];
+            $data['TotalPage'] = ceil($productArray['TotalRecord'] / PAGE_LIMIT);
+            $data['Categories'] = $this->product_model->Categories();
+            $data['MetaTitle']='Products';
+            $data['MetaDescription']='admin/Products';
+            $data['View']='admin/Products';
+            $this->load->view('admin/template', $data);
+        }else{
+            $data = array();
+            $data['CurrentPage'] = $page;
+            $page = $page - 1;
+            $start = ($page * PAGE_LIMIT);
+            $productArray = $this->product_model->Products(array(),$start);
+            $data['Products'] = $productArray['Data'];
+            $data['TotalPage'] = ceil($productArray['TotalRecord'] / PAGE_LIMIT);
+            $data['Categories'] = $this->product_model->Categories();
+            $data['MetaTitle']='Products';
+            $data['MetaDescription']='admin/Products';
+            $data['View']='admin/Products';
+            $this->load->view('admin/template', $data);
+        }
+
     }
     function Contacts()
     {
